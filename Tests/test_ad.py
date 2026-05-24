@@ -3,15 +3,18 @@ from selenium.webdriver.support import expected_conditions as EC
 from locators import *
 from selenium.common.exceptions import TimeoutException
 import time
+from selenium.webdriver.support.ui import WebDriverWait
 
-def test_create_ad_unauthorized_user(driver, wait):
+def test_create_ad_unauthorized_user(driver):
+    wait = WebDriverWait(driver, 10)
     driver.get(MAIN_URL)
     wait.until(EC.element_to_be_clickable(CREATE_AD_BUTTON)).click()
     wait.until(EC.element_to_be_clickable(NO_ACCOUNT_BUTTON)).click()
 
     assert wait.until(EC.visibility_of_element_located(POPUP_WINDOW_LOGIN)), "Окно предупреждения об авторизации не появилось"
 
-def test_create_ad_authorized_user(driver, wait):
+def test_create_ad_authorized_user(driver):
+    wait = WebDriverWait(driver, 10)
     driver.get(MAIN_URL)
     wait.until(EC.element_to_be_clickable(LOGIN_REG_BUTTON)).click()
     wait.until(EC.presence_of_element_located(EMAIL_FIELD)).send_keys(*LOGIN_TEST_USER)
